@@ -33,6 +33,12 @@
   :config
   (load-theme 'solarized-dark t))
 
+;; 设置emacs 环境变量
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
+
 ;;将模块化后的几个文件加载到load-path中
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/custom")
@@ -71,7 +77,9 @@
 (global-linum-mode 1)
 
 ;; 关闭文件滑动控件
-(scroll-bar-mode -1)
+(if (display-graphic-p)
+    (progn
+      (scroll-bar-mode -1)))
 
 ;;菜单隐藏
 (menu-bar-mode -1)
