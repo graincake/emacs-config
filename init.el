@@ -43,7 +43,6 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/custom")
 
-;;(use-package 'solarized-theme)
 
 (require 'setup-general)
 
@@ -54,7 +53,7 @@
 ;; (require 'setup-ggtags)
 (require 'setup-cedet)
 (require 'setup-editing)
-
+(require 'setup-c)
 (require 'init-keybindings)
 
 
