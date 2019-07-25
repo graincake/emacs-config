@@ -29,9 +29,14 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(use-package solarized-theme
-  :config
-  (load-theme 'solarized-dark t))
+(if (display-graphic-p)
+    (progn
+      (use-package solarized-theme
+        :config
+        (load-theme 'solarized-dark t)))
+      (use-package atom-one-dark-theme
+        :config
+        (load-theme 'atom-one-dark)))
 
 ;; 设置emacs 环境变量
 (use-package exec-path-from-shell
