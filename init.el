@@ -1,3 +1,7 @@
+;;; package -- Summary
+;;
+;;; Commentary:
+
 
 (require 'package)
 (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
@@ -46,19 +50,14 @@
 
 ;;将模块化后的几个文件加载到load-path中
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-(add-to-list 'load-path "~/.emacs.d/custom")
 
 
 (require 'setup-general)
-
-(if (version< emacs-version "24.4")
-    (require 'setup-ivy-counsel)
-  (require 'setup-helm)
-  (require 'setup-helm-gtags))
-;; (require 'setup-ggtags)
-(require 'setup-cedet)
-(require 'setup-editing)
-(require 'setup-c)
+(require 'setup-helm)
+(require 'setup-helm-gtags)
+;(require 'setup-cedet)
+;(require 'setup-editing)
+;(require 'setup-c)
 (require 'init-keybindings)
 
 
@@ -102,3 +101,60 @@
 
 ;;关闭声音
 (setq ring-bell-function 'ignore)
+
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode)
+
+  (use-package yasnippet-snippets :ensure t)
+  )
+
+;;
+;; company
+;;
+(use-package company
+  :ensure t;TODO:
+  :config
+  (global-company-mode t)
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 3)
+  (setq company-backends
+        '((company-files
+            company-yasnippet
+            company-keywords
+            company-capf
+            )
+          (company-abbrev company-dabbrev))))
+
+(add-hook 'emacs-lisp-mode-hook (lambda ()
+             (add-to-list (make-local-variable 'company-backends)
+                          '(company-elisp))))
+;;
+;; change C-n C-p
+;;
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous)
+  (define-key company-active-map (kbd "M-n") nil)
+  (define-key company-active-map (kbd "M-p") nil))
+
+;;
+;; change company complete common
+;;
+
+(advice-add 'company-complete-common :before (lambda () (setq my-companey-point (point))))
+(advice-add 'company-complete-common :after (lambda () (when (equal my-company-point (point)) (yas-expand))))
+
+
+;;
+;; flycheck
+;;
+(use-package flycheck
+:ensure t
+:config
+(global-flycheck-mode t))
+
+;;; init.el ends here
+
+

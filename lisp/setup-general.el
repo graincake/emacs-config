@@ -33,10 +33,10 @@
  )
 
 ;; company
-(use-package company
-  :init
-  (global-company-mode 1)
-  (delete 'company-semantic company-backends))
+;;(use-package company
+;;  :init
+;;  (global-company-mode 1)
+;;  (delete 'company-semantic company-backends))
 ;; (define-key c-mode-map  [(control tab)] 'company-complete)
 ;; (define-key c++-mode-map  [(control tab)] 'company-complete)
 
@@ -44,8 +44,12 @@
 (use-package projectile
   :init
   (projectile-global-mode)
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (setq projectile-enable-caching t))
 
+;; ag
+(use-package ag :ensure t)
 ;; Package zygospore
 (use-package zygospore
   :bind (("C-x 1" . zygospore-toggle-delete-other-windows)
