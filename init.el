@@ -107,7 +107,7 @@
   :config
   (yas-global-mode)
 
-  (use-package yasnippet-snippets :ensure t)
+  (use-package yasnippet-snippets)
   )
 
 ;;
@@ -155,6 +155,11 @@
 :config
 (global-flycheck-mode t))
 
+(use-package ag)
+
+;; use horizon splite instead 
+(setq split-width-threshold 0)
+(setq split-height-threshol nil)
 ;;; init.el ends here
 
 
